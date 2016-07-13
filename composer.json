@@ -1,0 +1,33 @@
+{
+  "name": "agerecompany/zfc-menu",
+  "description": "Menu module for ZF2",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "menu",
+    "agere"
+  ],
+  "authors": [
+    {
+      "name": "Sergiy Popov",
+      "email": "popow.sergiy@gmail.com",
+      "homepage": "http://agere.com.ua/",
+      "role": "Developer"
+    },
+    {
+      "name": "Vlad Kozak",
+      "email": "vlad.gem.typ@gmail.com",
+      "homepage": "http://agere.com.ua/",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Agere\\Menu\\": "src/"
+    }
+  }
+}
