@@ -1,45 +1,16 @@
-<div class="left-menu">
-    <div class="col-md-2 " style="height: 800px; background-color: #27A18C">
-
-        <!--get Current User Email-->
-        <?php $userHelper = $this->plugin('user');
-        $user = $userHelper->current();?>
-        <div class="user-profiler" style="color:#ffffff;">
-            <?php
-            if ($user->getPhoto()) {
-                $photoName = explode('.', $user->getPhoto());
-                $photoExt = '.'.end($photoName);
-                ?>
-                <img src="/files/get/<?= $user->getId() ?>/document/users/file/<?='small'.$photoExt?>">
-                <div class="image-middle hide"></div>
-            <?php } else { ?>
-                <img src="/media/images/nophoto.jpg" style="width:50px; margin: 10px">
-            <?php } ?>
-            <p><span class="user-name row"><?= $this->simpler($user->getRoles())->asString('role') ?></span>
-                <span class="user-role row"><?= $user->getEmail() ?></span></p>
-        </div>
-
-
-
-        <div class="header-user-menu" style="text-align: right">
-            <a class="logout-link" href="#" onclick="if(confirm('Выйти?')) document.location.href='<?= $this->url(
-                'default', [
-                'controller' => 'user',
-                'action' => 'logout',
-            ]
-            ) ?>'">Выйти</a>
-        </div>
-        <div class="head-label" style="color: white; font-size: 13pt; margin: 20px 20px">
-            Европейский<br> Cтоматологический Центр
-        </div>
-        <img class="calendar" src="<?php echo $this->basePath(); ?>/img/calendar.png">
-        <div class="menu" style="margin-top: 20px">
-            <ul class="nav">
-                <?php
-                $menuHelper = $this->menu();
-                $menuHelper->menu();
-                ?>
-            </ul>
-        </div>
+<!-- SIDEBAR START -->
+<div class="sidebar">
+    <div class="calendar-wrap">
+        <div></div>
     </div>
+    <ul class="sidebar-nav">
+        <?php
+        $menuHelper = $this->menu();
+        $menuHelper->menu();
+        ?>
+    </ul>
 </div>
+<!-- SIDEBAR END -->
+
+
+

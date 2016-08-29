@@ -17,7 +17,16 @@ class MenuHelper extends AbstractHelper
         return $menuService->getMainMenu();
     }
 
-    public function menu()
+    public function menu() {
+        $sm = $this->getServiceManager();
+        $menuService = $sm->get('MenuService');
+        $menu = $menuService->getMenu();
+        foreach ($menu as $page) {
+            printf('<li><a href="/%s">%s</a>', $page->getUrl(), $page->getTitle());
+        }
+    }
+
+    /*public function menu()
     {
         $sm = $this->getServiceManager();
         $menuService = $sm->get('MenuService');
@@ -54,5 +63,7 @@ class MenuHelper extends AbstractHelper
                 echo "</ul></li>\n";
             }
         }
-    }
+    }*/
 }
+
+
