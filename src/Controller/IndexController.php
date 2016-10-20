@@ -1,274 +1,484 @@
 <?php
 namespace Agere\Menu\Controller;
 
+use Zend\Stdlib\Exception;
+use Zend\View\Model\JsonModel;
+use phpDocumentor\Reflection\Types\Void_;
+use Symfony\Component\Console\Tests\Command\HelpCommandTest;
 use Zend\Mvc\Controller\AbstractActionController;
 use Agere\Menu\Model\Category;
+use Zend\View\Helper\ViewModel;
+use Zend\Config\Reader\Json AS ConfigReaderJson;
+use Zend\Config\Config;
+use Zend\Config\Writer\Json AS ConfigWriterJson;
+use Agere\Core\Service\ServiceManagerAwareTrait;
 
+/**
+ * @method \Agere\Menu\Controller\Plugin\MenuData menuData()
+ */
 class IndexController extends AbstractActionController
 {
 
-    /*public $menu = [
-        'Главная' => 'index',
-        'Пациенты' => 'patient',
-        'Сотрудники' => 'index',
-        'Коммуникатор' => 'index',
-        'График врачей' => 'index',
-        'Учёт материалов' => [
-            'Материалы' => 'material',
-            'Тип материала' => 'type-material',
-            'Категория материала' => 'material-category',
-        ]
-    ];*/
-
-
+    use ServiceManagerAwareTrait;
     /**
      * Documentation to usage
      * https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/tree.md#basic-usage-examples
-     */
-    public function indexAction()
+*/
+    public function indexAction()  //для повернення меню в початковий стан (на хмарі) розкоментувати та запустити даний метод
     {
-        die(__METHOD__);
-
         $sm = $this->getServiceLocator();
         $om = $sm->get('Doctrine\ORM\EntityManager');
 
-        /*foreach (array_keys($this->menu) as $item) {
-            if (!is_array($this->menu[$item])) {
-                $temp = new Category();
-                $temp->setTitle($item);
-                $temp->setUrl($this->menu[$item]);
-            } else {
-                $temp = new Category();
-                $temp->setTitle($item);
-                foreach ($this->menu[$item] as $x) {
+       /* $ourEmployees = new Category();
+        $ourEmployees->setTitle('Наши сотрудники');
+        $ourEmployees->setUrl('staff/index');
 
-                }
-            }
-        }*/
+        $callCenter = new Category();
+        $callCenter->setTitle('Колл центр');
+        $callCenter->setUrl('call-center/index');
 
-        $index = new Category();
-        $index->setTitle('Главная');
-        $index->setUrl('');
+        $promProducts = new Category();
+        $promProducts->setTitle('Рекламная продукция');
+        $promProducts->setUrl('shop-promotional-products/index');
 
-        $patient = new Category();
-        $patient->setTitle('Пациенты');
-        $patient->setUrl('patient');
+        $shopSpares = new Category();
+        $shopSpares->setTitle('Магазин запчастей');
+        $shopSpares->setUrl('shop-spares/index');
 
-        $employee = new Category();
-        $employee->setTitle('Сотрудники');
-        $employee->setUrl('user');
+        $orders = new Category();
+        $orders->setTitle('Приказы и распоряжения');
+        $orders->setUrl('documents/index');
 
-        $communicator = new Category();
-        $communicator->setTitle('Коммуникатор');
-        $communicator->setUrl('');
+        $warranty = new Category();
+        $warranty->setTitle('Гарантия и сервис');
+        $warranty->setUrl('warranty/index');
 
-        $doctor = new Category();
-        $doctor->setTitle('График врачей');
-        $doctor->setUrl('');
+        $logistics = new Category();
+        $logistics->setTitle('Логистика');
+        $logistics->setUrl('logistics/orders');
 
-        $accMaterials = new Category();
-        $accMaterials->setTitle('Учет материалов');
+        $softLoans = new Category();
+        $softLoans->setTitle('Льготное кредитование');
+        $softLoans->setUrl('soft-loans/index');
 
-        $material = new Category();
-        $material->setTitle('Материалы');
-        $material->setUrl('material');
-        $material->setParent($accMaterials);
+        $settingsMain = new Category();
+        $settingsMain->setTitle('Настройки');
+        $settingsMain->setUrl('settings/index');
 
-        $typeMaterial = new Category();
-        $typeMaterial->setTitle('Тип материала');
-        $typeMaterial->setUrl('type-material');
-        $typeMaterial->setParent($accMaterials);
+        $spareAuto = new Category();
+        $spareAuto->setTitle('РосАвтоЗапчасть');
+        $spareAuto->setUrl('spare/index');
 
-        $materialCategory = new Category();
-        $materialCategory->setTitle('Категория материала');
-        $materialCategory->setUrl('material-category');
-        $materialCategory->setParent($accMaterials);
+        $discount_n = new Category();
+        $discount_n->setTitle('Программа лояльности');
+        $discount_n->setUrl('discount/index');
 
-        $service = new Category();
-        $service->setTitle('Сервисы');
+        $updatePrice = new Category();
+        $updatePrice->setTitle('Актуализировать цени');
+        $updatePrice->setUrl('/store/update-price-list');
+        $updatePrice->setParent($settingsMain);
 
-        $serviceName = new Category();
-        $serviceName->setTitle('Список сервисов');
-        $serviceName->setUrl('service');
-        $serviceName->setParent($service);
+        $usersMonitoring = new Category();
+        $usersMonitoring->setTitle('Мониторинг пользователей');
+        $usersMonitoring->setUrl('/users/monitoring');
+        $usersMonitoring->setParent($settingsMain);
 
-        $serviceCategory = new Category();
-        $serviceCategory->setTitle('Категории сервисов');
-        $serviceCategory->setUrl('service-category');
-        $serviceCategory->setParent($service);
+        $rosAuto = new Category();
+        $rosAuto->setTitle('РосАвтоЗапчасть');
+        $rosAuto->setUrl('/spare/index');
+        $rosAuto->setParent($settingsMain);
 
-        $setting = new Category();
-        $setting->setTitle('Настройки');
+        $discount = new Category();
+        $discount->setTitle('Программа лояльности');
+        $discount->setUrl('/discount/index');
+        $discount->setParent($settingsMain);
 
-        $role = new Category();
-        $role->setTitle('Роли');
-        $role->setUrl('role');
-        $role->setParent($setting);
+        $systemSettings = new Category();
+        $systemSettings->setTitle('Настройки системы');
+        $systemSettings->setUrl('');
+        $systemSettings->setParent($settingsMain);
+
+        $mail = new Category();
+        $mail->setTitle('Письма');
+        $mail->setUrl('/mail/index');
+        $mail->setParent($systemSettings);
+
+        $roles = new Category();
+        $roles->setTitle('Роли');
+        $roles->setUrl('/roles/index');
+        $roles->setParent($systemSettings);
+
+        $users = new Category();
+        $users->setTitle('Управление пользователем');
+        $users->setUrl('/users/index');
+        $users->setParent($systemSettings);
+
+        $jobTitles = new Category();
+        $jobTitles->setTitle('Должности');
+        $jobTitles->setUrl('/job-titles/index');
+        $jobTitles->setParent($systemSettings);
+
+        $personalData = new Category();
+        $personalData->setTitle('Личные данные');
+        $personalData->setUrl('/users/change-password');
+        $personalData->setParent($systemSettings);
 
         $status = new Category();
-        $status->setTitle('Управление статусами');
-        $status->setUrl('status');
-        $status->setParent($setting);
+        $status->setTitle('Статусы');
+        $status->setUrl('/status/index');
+        $status->setParent($systemSettings);
 
-        $om->persist($index);
-        $om->persist($patient);
-        $om->persist($employee);
-        $om->persist($communicator);
-        $om->persist($doctor);
-        $om->persist($accMaterials);
-        $om->persist($material);
-        $om->persist($typeMaterial);
-        $om->persist($materialCategory);
+        $editMenu = new Category();
+        $editMenu->setTitle('Редактирование меню');
+        $editMenu->setUrl('/menu/menu');
+        $editMenu->setParent($systemSettings);
+
+        $cars = new Category();
+        $cars->setTitle('Автомобили');
+        $cars->setUrl('');
+        $cars->setParent($settingsMain);
+
+        $brand = new Category();
+        $brand->setTitle('Марки машин');
+        $brand->setUrl('/brand/index');
+        $brand->setParent($cars);
+
+        $carModel = new Category();
+        $carModel->setTitle('Модели');
+        $carModel->setUrl('/car-model/index');
+        $carModel->setParent($cars);
+
+        $carSubgroup = new Category();
+        $carSubgroup->setTitle('Подгрупы авто');
+        $carSubgroup->setUrl('/car-subgroup/index');
+        $carSubgroup->setParent($cars);
+
+        $carEquipment = new Category();
+        $carEquipment->setTitle('Комплектации');
+        $carEquipment->setUrl('/car-equipment/index');
+        $carEquipment->setParent($cars);
+
+        $carAssembly = new Category();
+        $carAssembly->setTitle('Сборка авто');
+        $carAssembly->setUrl('/car-assembly/index');
+        $carAssembly->setParent($cars);
+
+        $supplier = new Category();
+        $supplier->setTitle('Поставщики');
+        $supplier->setUrl('/supplier/index');
+        $supplier->setParent($settingsMain);
+
+        $raSupplier = new Category();
+        $raSupplier->setTitle('Поставщики РАЗ');
+        $raSupplier->setUrl('/ra-supplier/index');
+        $raSupplier->setParent($settingsMain);
+
+        $traffic = new Category();
+        $traffic->setTitle('Перевозки');
+        $traffic->setUrl('');
+        $traffic->setParent($settingsMain);
+
+        $autocarts = new Category();
+        $autocarts->setTitle('Автовозы');
+        $autocarts->setUrl('/autocarts/index');
+        $autocarts->setParent($traffic);
+
+        $autocartsForwarder = new Category();
+        $autocartsForwarder->setTitle('Экспедиторы');
+        $autocartsForwarder->setUrl('/autocarts-forwarder/index');
+        $autocartsForwarder->setParent($traffic);
+
+        $typeAutocarts = new Category();
+        $typeAutocarts->setTitle('Типы перевозок');
+        $typeAutocarts->setUrl('/type-autocarts/index');
+        $typeAutocarts->setParent($traffic);
+
+        $clients = new Category();
+        $clients->setTitle('Клиенты');
+        $clients->setUrl('');
+        $clients->setParent($settingsMain);
+
+        $buyers = new Category();
+        $buyers->setTitle('Покупатели');
+        $buyers->setUrl('/buyers/index');
+        $buyers->setParent($clients);
+
+        $authorizedPersons = new Category();
+        $authorizedPersons->setTitle('Уполномоченые лица');
+        $authorizedPersons->setUrl('/authorized-persons/index');
+        $authorizedPersons->setParent($clients);
+
+        $optionalEquipment = new Category();
+        $optionalEquipment->setTitle('Дополнительное оборудование и аксессуары');
+        $optionalEquipment->setUrl('/optional-equipment/index');
+        $optionalEquipment->setParent($settingsMain);
+
+        $office = new Category();
+        $office->setTitle('Отделения');
+        $office->setUrl('');
+        $office->setParent($settingsMain);
+
+        $regions = new Category();
+        $regions->setTitle('Области');
+        $regions->setUrl('/regions/index');
+        $regions->setParent($office);
+
+        $towns = new Category();
+        $towns->setTitle('Города');
+        $towns->setUrl('/towns/index');
+        $towns->setParent($office);
+
+        $city = new Category();
+        $city->setTitle('Склады-продаж');
+        $city->setUrl('/city/index');
+        $city->setParent($office);
+
+        $dealerships = new Category();
+        $dealerships->setTitle('Дилерские центры');
+        $dealerships->setUrl('/dealerships/index');
+        $dealerships->setParent($office);
+
+        $department = new Category();
+        $department->setTitle('Отдел');
+        $department->setUrl('/department/index');
+        $department->setParent($office);
+
+        $typeBuy = new Category();
+        $typeBuy->setTitle('Способ покупки');
+        $typeBuy->setUrl('');
+        $typeBuy->setParent($settingsMain);
+
+        $vidyOplat = new Category();
+        $vidyOplat->setTitle('Виды оплат');
+        $vidyOplat->setUrl('/vidy-oplat/index');
+        $vidyOplat->setParent($typeBuy);
+
+        $vidyLizinga = new Category();
+        $vidyLizinga->setTitle('Виды лизинга');
+        $vidyLizinga->setUrl('/vidy-lizinga/index');
+        $vidyLizinga->setParent($typeBuy);
+
+        $vidyKreditov = new Category();
+        $vidyKreditov->setTitle('Виды кредитов');
+        $vidyKreditov->setUrl('/vidy-kreditov/index');
+        $vidyKreditov->setParent($typeBuy);
+
+        $vidyRassrochek = new Category();
+        $vidyRassrochek->setTitle('Виды рассрочек');
+        $vidyRassrochek->setUrl('/vidy-rassrochek/index');
+        $vidyRassrochek->setParent($typeBuy);
+
+        $carAction = new Category();
+        $carAction->setTitle('Акции');
+        $carAction->setUrl('/car-action/index');
+        $carAction->setParent($typeBuy);
+
+        $ordersAndInstractions = new Category();
+        $ordersAndInstractions->setTitle('Приказы и распоряжения');
+        $ordersAndInstractions->setUrl('');
+        $ordersAndInstractions->setParent($settingsMain);
+
+        $category = new Category();
+        $category->setTitle('Разделы в приказах и распоряжениях');
+        $category->setUrl('/category/index');
+        $category->setParent($ordersAndInstractions);
+
+        $crm = new Category();
+        $crm->setTitle('CRM');
+        $crm->setUrl('');
+        $crm->setParent($settingsMain);
+
+        $customerResponse = new Category();
+        $customerResponse->setTitle('Ответ клиента');
+        $customerResponse->setUrl('/customer-response/index');
+        $customerResponse->setParent($crm);
+
+        $spares = new Category();
+        $spares->setTitle('Запчасти');
+        $spares->setUrl('/spares/index');
+        $spares->setParent($settingsMain);
+
+        $promotionalProd = new Category();
+        $promotionalProd->setTitle('Рекламная продукция');
+        $promotionalProd->setUrl('/promotional-products/index');
+        $promotionalProd->setParent($settingsMain);
+
+        $om->persist($ourEmployees);
+        $om->persist($callCenter);
+        $om->persist($promProducts);
+        $om->persist($shopSpares);
+        $om->persist($orders);
+        $om->persist($warranty);
+        $om->persist($logistics);
+        $om->persist($softLoans);
+        $om->persist($settingsMain);
+
+        //$om->persist($settings);
+        $om->persist($updatePrice);
+        $om->persist($usersMonitoring);
+        $om->persist($rosAuto);
+        $om->persist($discount);
+        $om->persist($systemSettings);
+        $om->persist($mail);
+        $om->persist($roles);
+        $om->persist($users);
+        $om->persist($jobTitles);
+        $om->persist($personalData);
         $om->persist($status);
-        $om->persist($service);
-        $om->persist($serviceCategory);
-        $om->persist($setting);
-        $om->persist($serviceName);
-        $om->persist($role);
+        $om->persist($editMenu);
+        $om->persist($cars);
+        $om->persist($brand);
+        $om->persist($carModel);
+        $om->persist($carSubgroup);
+        $om->persist($carEquipment);
+        $om->persist($carAssembly);
+        $om->persist($supplier);
+        $om->persist($raSupplier);
+        $om->persist($traffic);
+        $om->persist($autocarts);
+        $om->persist($autocartsForwarder);
+        $om->persist($typeAutocarts);
+        $om->persist($clients);
+        $om->persist($buyers);
+        $om->persist($authorizedPersons);
+        $om->persist($optionalEquipment);
+        $om->persist($office);
+        $om->persist($regions);
+        $om->persist($towns);
+        $om->persist($city);
+        $om->persist($dealerships);
+        $om->persist($department);
+        $om->persist($typeBuy);
+        $om->persist($vidyOplat);
+        $om->persist($vidyLizinga);
+        $om->persist($vidyKreditov);
+        $om->persist($vidyRassrochek);
+        $om->persist($carAction);
+        $om->persist($ordersAndInstractions);
+        $om->persist($category);
+        $om->persist($crm);
+        $om->persist($customerResponse);
+        $om->persist($spares);
+        $om->persist($promotionalProd);
+        $om->persist($spareAuto);
+        $om->persist($discount_n);
 
         $om->flush();
+        die(__METHOD__);*/
+    }
+    public function menuAction() {
 
-        die(__METHOD__);
+        $this->layout('layout/home');
+        //$view = (new \Zend\View\Model\ViewModel())->setTerminal(true);
+
+        return [];
+
     }
 
-    public function testAction() {
+    public function menuDataAction()
+    {
+        $sm = $this->getServiceManager();
+        $menuService = $sm->get('MenuService');
+        $array = $this->menuData()->dataMenu($menuService);
 
+        return new JsonModel($array);
+    }
+
+    public function modifyAction()
+    {
+        if (!($request = $this->getRequest()) && !$request->isPost()) {
+            return [];
+        }
+
+        if (!method_exists($this, $method = $request->getPost('oper') . 'Operation')) {
+            throw new Exception\RuntimeException(sprintf(
+                'Operation "%s" not supported. Use only edit or delete operation', $request->getPost('oper')
+            ));
+        }
+
+        return $this->{$method}();
+    }
+
+    public function addOperation()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $sm = $this->getServiceLocator();
+            $om = $sm->get('Doctrine\ORM\EntityManager');
+            $repo = $om->getRepository('Agere\Menu\Model\Category');
+            $menuService = $sm->get('MenuService');
+
+            $new = new Category();
+            $new->setTitle($request->getPost('name'));
+            $new->setUrl($request->getPost('url'));
+            if ($request->getPost('parent_id')) {
+                $menu = $menuService->getMenuById($request->getPost('parent_id'));
+                $new->setParent($menu[0]);
+            }
+            $om->persist($new);
+            $om->flush();
+
+            return (new JsonModel([
+                'message' => 'Item successfully added',
+            ]));
+        }
+        return false;
+    }
+
+    public function editOperation() {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $sm = $this->getServiceLocator();
+            $om = $sm->get('Doctrine\ORM\EntityManager');
+            $repo = $om->getRepository('Agere\Menu\Model\Category');
+            $menuService = $sm->get('MenuService');
+
+            $menu = $menuService->getMenuById($request->getPost('id'));
+            $menu[0]->setUrl($request->getPost('url'));
+            $menu[0]->setTitle($request->getPost('name'));
+
+            $om->flush();
+            return (new JsonModel([
+              'message' => 'Item successfully edited',
+            ]));
+        }
+        return false;
+    }
+
+    public function delOperation() {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
         $sm = $this->getServiceLocator();
         $om = $sm->get('Doctrine\ORM\EntityManager');
         $repo = $om->getRepository('Agere\Menu\Model\Category');
+        $menuService = $sm->get('MenuService');
 
-        /**
-         * Retrieving the whole tree as an array
-         */
-        /*$arrayTree = $repo->childrenHierarchy(); // зайві накладні витрати якщо буде велике меню
-        foreach ($arrayTree as $item) {
-            \Zend\Debug\Debug::dump($item);
+        $menu = $menuService->getMenuById($request->getPost('id'));
+        $menuChild = $menuService->getMenuByParentId($request->getPost('id'));
+
+        foreach ($menuChild as $item){
+            $this->menuData()->deleteMenu($item);
+            $repo->removeFromTree($item);
         }
-        die();
-        \Zend\Debug\Debug::dump($arrayTree); die();*/
-
-        /**
-         * Retrieving as html tree
-         */
-        $htmlTree = $repo->childrenHierarchy(
-            null, /* starting from root nodes */
-            false, /* false: load all children, true: only direct */
-            array(
-                'decorate' => true,
-                'representationField' => 'slug',
-                'html' => true
-            )
-        );
-
-         //echo $htmlTree; die();
-
-        /**
-         * Customize html tree output
-         */
-        $repo = $om->getRepository('Agere\Menu\Model\Category');
-        $options = array(
-            'decorate' => true,
-            'rootOpen' => '<ul>',
-            'rootClose' => '</ul>',
-            'childOpen' => '<li>',
-            'childClose' => '</li>',
-            'nodeDecorator' => function($node) {
-                return '<a href="/'.$node['url'].'">'.$node['title'].'</a>';
-            }
-        );
-        $htmlTree = $repo->childrenHierarchy(
-            null, /* starting from root nodes */
-            false, /* false: load all children, true: only direct */
-            $options
-        );
-
-        //echo $htmlTree; die();
-
-        /**
-         * Generate your own node list
-         */
-        $query = $om
-            ->createQueryBuilder()
-            ->select('node')
-            ->from('Agere\Menu\Model\Category', 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->where('node.level = 0')
-            ->getQuery()
-        ;
-        $options = array('decorate' => true);
-        $tree = $repo->buildTree($query->getArrayResult(), $options);
-
-        //echo $tree; die();
-
-
-        /**
-         * Move Down (Опустити в самий низ)
-         */
-     //   $repo->moveDown($test, true);
-
-
-        /**
-         * Move Up (Підняти на одну позицію)
-         */
-       // $repo->moveUp($test, 1);
-
-        /**
-         * Find One By Title
-         */
-        $food = $repo->findOneByTitle('Учет материалов');
-        $test = new Category();
-        $test->setTitle('Test');
-        $test->setUrl('test');
-        $test->setParent($food);
-        $om->persist($test);
+        if ($menu[0]) {
+            $repo->removeFromTree($menu[0]);
+        }
+        $om->clear();
         $om->flush();
-        //$repo->moveDown($food, true);
+            return (new JsonModel([
+                'message' => 'Item successfully deleted',
+            ]));
+        }
+        return false;
+    }
 
-        $children = $repo->children($food);
-
-        //\Zend\Debug\Debug::dump(count($children)); die();
-        // \Zend\Debug\Debug::dump(($food->getTitle())); die();
-        //echo $repo->childCount($food);
-        // prints: 3
-        //echo $repo->childCount($food, true/*direct*/);
-        // prints: 2
-        $carrots = $repo->findOneByTitle('Carrots');
-        $test = new Category();
-        $test->setTitle('Test');
-        $test->setParent($carrots);
-        // move it up by one position
-        // $children contains:
-        // 3 nodes
-        $children = $repo->children($food, false, 'title');
-        // will sort the children by title
-        //$carrots = $repo->findOneByTitle('Carrots');
-        $path = $repo->getPath($carrots);
-
-        /* $path contains:
-           0 => Food
-           1 => Vegetables
-           2 => Carrots
-        */
-
-        // verification and recovery of tree
-        //$repo->verify();
-        // can return TRUE if tree is valid, or array of errors found on tree
-        //$repo->recover();
-        //$om->flush(); // important: flush recovered nodes
-        // if tree has errors it will try to fix all tree nodes
-
-        // UNSAFE: be sure to backup before running this method when necessary, if you can use $em->remove($node);
-        // which would cascade to children
-        // single node removal
-        //$vegies = $repo->findOneByTitle('Vegetables');
-        //$repo->removeFromTree($vegies);
-        //$om->clear(); // clear cached nodes
-        // it will remove this node from tree and reparent all children
-
-        // reordering the tree
-        //$food = $repo->findOneByTitle('Food');
-        //$repo->reorder($food, 'title');
-        // it will reorder all "Food" tree node left-right values by the title
-        die();
+    public function testAction()
+    {
+        $sm = $this->getServiceLocator();
+        $om = $sm->get('Doctrine\ORM\EntityManager');
+        $repo = $om->getRepository('Agere\Menu\Model\Category');
+        /*$carrots = $repo->findOneByTitle('test');
+        $repo->moveUp($carrots, true);
+        die(__METHOD__);*/
     }
 }

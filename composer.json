@@ -22,6 +22,9 @@
     }
   ],
   "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.5"
+  },
   "autoload": {
     "psr-4": {
       "Agere\\Menu\\": "src/"

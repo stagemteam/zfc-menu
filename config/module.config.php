@@ -7,9 +7,28 @@ return array(
 		'aliases' => [
 			'menu' => Controller\IndexController::class,
 		],
-		'invokables' => [
-			Controller\IndexController::class => Controller\IndexController::class,
+		'factories' => [
+			Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
 		],
+	],
+
+	'controller_plugins' => [
+		'aliases' => [
+			'menuData' => Controller\Plugin\MenuData::class,
+		],
+		/*'invokables' => [
+			Controller\Plugin\MenuData::class => Controller\Plugin\MenuData::class,
+		],*/
+		/*'factories' => [
+		Controller\Plugin\MenuData::class => Controller\Plugin\Factory\MenuDataFactory::class,
+		],*/
+		'factories' => array(
+				Controller\Plugin\MenuData::class => function($sm) {
+				$plugin = new \Agere\Menu\Controller\Plugin\MenuData();
+				$plugin->setServiceManager($sm->getServiceLocator());
+				return $plugin;
+			},
+		),
 	],
 
 	'service_manager' => [
@@ -45,7 +64,9 @@ return array(
 	'view_manager' => array(
 		'template_map' => array(
 			'left-menu'               => __DIR__ . '/../view/template/left-menu.phtml',
-
+		),
+		'template_path_stack' => array(
+			__DIR__ . '/../view',
 		),
 	),
 

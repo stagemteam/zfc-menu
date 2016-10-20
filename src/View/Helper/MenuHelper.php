@@ -17,93 +17,125 @@ class MenuHelper extends AbstractHelper
         return $menuService->getMainMenu();
     }
 
-    /*public function menu() {
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
-        $menu = $menuService->getMenu();
-        foreach ($menu as $page) {
-            printf('<li><a href="/%s">%s <span class="caret"></span></a><ul><li><a href="/patient">РџР°С†РёРµРЅС‚С‹</a></li></ul></li>', $page->getUrl(), $page->getTitle());
-        }
-    }*/
-
     public function menu()
     {
         $sm = $this->getServiceManager();
         $menuService = $sm->get('MenuService');
-        $menu = $menuService->getMenu();
-        foreach ($menu as $page) {
-            $children = $menuService->getChildren($page);
-            $class = "";
-            if (!$children) {
-                if ($page->getParent()) {
-                    continue;
+        $menu = $menuService->getMainMenu();
+
+        echo ('<div class="sidebar">');
+        foreach ($menu as $item) {
+                $str = strpos($item->getUrl(), "/");
+                $controller = substr($item->getUrl(), 0, $str);
+                 printf('<div class="main-nav '. $controller .'"><span></span><a href="/%s">%s</a></div>', $item->getUrl(), $item->getTitle());
+        }
+        printf('</div>');
+    }
+
+    public function menuIcon(){
+        $sm = $this->getServiceManager();
+        $menuService = $sm->get('MenuService');
+        $menu = $menuService->getMainMenu();
+
+        printf('<div class="sidebar">');
+        foreach ($menu as $item) {
+            $str = strpos($item->getUrl(), "/");
+            $controller = substr($item->getUrl(), 0, $str);
+            printf('<ul> <li class="' . $controller .'-ic"><a href="/%s">%s</a></ul>', $item->getUrl(), $item->getTitle());
+        }
+        printf('</div>');
+    }
+
+    public function menuList($url)
+    {
+        $sm = $this->getServiceManager();
+        $menuService = $sm->get('MenuService');
+        $mainMenu = $menuService->getMenuByUrl($url);
+
+        if ($mainMenu) {
+            $root = $mainMenu[0]->getRoot();
+        } else {
+            $urlSubMenu = '/' . $url;
+            $menuList = $menuService->getRootByUrl($urlSubMenu);
+            $root = $menuList[0]->getRoot();
+            //\Zend\Debug\Debug::dump($root); die(__METHOD__);
+        }
+        $menu = $menuService->getMenuIdByRoot($root);
+        //\Zend\Debug\Debug::dump(recursive()); die();
+           printf('<ul class="level-1">');
+               foreach ($menu as $item) {
+                   $this->recursiveSubMenu($item);
+               }
+           printf('</ul>');
+    }
+
+    public function recursiveSubMenu($item)
+    {
+        foreach ($item->getChildren() as $child)
+        {
+            if (count($child->getChildren()))
+            {
+                printf('<li><a href="#">%s</a>
+                            <span class="figure arrow-down"></span>
+                            <ul class="level-2">', $child->getTitle());
+                foreach ($child->getChildren() as $child2) {
+                    if (count($child2->getChildren()) == 0){
+                        printf('<li><a href="%s">%s</a></li>', $child2->getUrl(), $child2->getTitle());
+                    } else {
+                        $this->recursiveSubMenu($child);
+                    }
                 }
-                printf(
-                    '<li class="">' . "\n",
-                    ($class ? ' ' . $class : '')
-                );
-                printf(
-                    '<a href="/%s">%s</a>' . "\n",
-                    $page->getUrl(),
-                    $page->getTitle()
-                );
-            } else {
-                printf(
-                    '<li class="dropdown%s">' . "\n",
-                    ($class ? ' ' . $class : '')
-                );
-                printf(
-                    '<a href="/" class="sidenav-dropdown-toggle">%s<b class="caret"></b></a>' . "\n",
-                    $page->getTitle()
-                );
-                echo '<ul class="sub-menu">' . "\n";
-                foreach ($children as $child) {
-                    printf('<li><a href="/%s">%s</a></li>', $child->getUrl(), $child->getTitle());
-                }
-                echo "</ul></li>\n";
+                echo '</ul></li>';
+            }
+           elseif (count($item->getParent()) == 0) {
+                printf('<li><a href="%s">%s</a></li>', $child->getUrl(), $child->getTitle());
             }
         }
     }
 
-
-    /*public function menu()
-    {
+    public function getNameSubMenu($url){
         $sm = $this->getServiceManager();
         $menuService = $sm->get('MenuService');
-        $menu = $menuService->getMenu();
-        foreach ($menu as $page) {
-            $children = $menuService->getChildren($page);
-            $class = "";
-            if (!$children) {
-                if ($page->getParent()) {
-                    continue;
-                }
-                printf(
-                    '<li class="">' . "\n",
-                    ($class ? ' ' . $class : '')
-                );
-                printf(
-                    '<a href="/%s">%s</a>' . "\n",
-                    $page->getUrl(),
-                    $page->getTitle()
-                );
-            } else {
-                printf(
-                    '<li class="dropdown%s">' . "\n",
-                    ($class ? ' ' . $class : '')
-                );
-                printf(
-                    '<a href="/" class="dropdown-toggle" data-toggle="dropdown">%s<b class="caret"></b></a>' . "\n",
-                    $page->getTitle()
-                );
-                echo '<ul class="dropdown-menu">' . "\n";
-                foreach ($children as $child) {
-                    printf('<li><a href="/%s">%s</a></li>', $child->getUrl(), $child->getTitle());
-                }
-                echo "</ul></li>\n";
-            }
+        $mainMenu = $menuService->getMenuByUrl($url);
+
+        $nameSubMenu = '';
+        if ($mainMenu) {
+            $nameSubMenu = $mainMenu[0]->getTitle();
+        } else {
+            $urlSubMenu = '/' . $url;
+            $menuList = $menuService->getRootByUrl($urlSubMenu);
+            $root = $menuList[0]->getRoot();
+            $id = $root;                                           //значення root рівне значенню id головного меню (батьківського)
+            $menuByRoot = $menuService->getMenuById($id);
+            $nameSubMenu = $menuByRoot[0]->getTitle();
         }
-    }*/
+        return $nameSubMenu;
+    }
+
+    public function getShowSubMenu($url){
+        $sm = $this->getServiceManager();
+        $menuService = $sm->get('MenuService');
+        $mainMenu = $menuService->getMenuByUrl($url);
+
+        if ($mainMenu) {
+            $idMainMenu = $mainMenu[0];
+        } else {
+            $urlSubMenu = '/' . $url;
+            $menuList = $menuService->getRootByUrl($urlSubMenu);
+            $root = $menuList[0]->getRoot();
+            $id = $root;                                           //значення root рівне значенню id головного меню (батьківського)
+            $menuByRoot = $menuService->getMenuById($id);
+            $idMainMenu = $menuByRoot[0];
+        }
+
+
+
+        if (count($idMainMenu->getChildren()))
+        {
+            $showSubMenu = true;
+        } else {
+            $showSubMenu = false;
+        }
+        return $showSubMenu;
+    }
 }
-
-
