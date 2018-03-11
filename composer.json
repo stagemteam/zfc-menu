@@ -1,6 +1,6 @@
 {
-  "name": "agerecompany/zfc-menu",
-  "description": "Menu module for ZF2",
+  "name": "stagem/zfc-menu",
+  "description": "Menu module for ZF",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -9,15 +9,13 @@
   ],
   "authors": [
     {
-      "name": "Sergiy Popov",
-      "email": "popow.sergiy@gmail.com",
-      "homepage": "http://agere.com.ua/",
+      "name": "Serhii Popov",
+      "email": "popow.serhii@gmail.com",
       "role": "Developer"
     },
     {
       "name": "Vlad Kozak",
       "email": "vlad.gem.typ@gmail.com",
-      "homepage": "http://agere.com.ua/",
       "role": "Developer"
     }
   ],
@@ -27,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Agere\\Menu\\": "src/"
+      "Stagem\\Menu\\": "src/"
     }
   }
 }
