@@ -1,5 +1,5 @@
 <?php
-namespace Agere\Menu;
+namespace Stagem\ZfcMenu;
 
 class Module {
 
@@ -17,7 +17,7 @@ class Module {
 					//$authService = $locator->get('UserAuthentication')->getAuthService();
 					//$user = new \Agere\Users\View\Helper\User($authService);
 					$user = $vhm->get('user');
-					return new \Agere\Menu\View\Helper\Menu($user->getUser(), $sm);
+					return new \Stagem\ZfcMenu\View\Helper\Menu($user->getUser(), $sm);
 				},
 			),
 		);

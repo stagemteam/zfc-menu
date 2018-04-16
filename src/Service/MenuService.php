@@ -7,10 +7,10 @@
  * @author Popov Sergiy <popov@agere.com.ua>
  * @datetime: 25.10.13 16:49
  */
-namespace Agere\Menu\Service;
+namespace Stagem\ZfcMenu\Service;
 
 use Agere\Core\Service\DomainServiceAbstract;
-use Agere\Menu\Model\Category;
+use Stagem\ZfcMenu\Model\Category;
 
 class MenuService extends DomainServiceAbstract
 {
@@ -22,7 +22,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where('node.level = 0')
 			->getQuery()
@@ -37,7 +37,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.level > 0")
 			->getQuery()
@@ -52,7 +52,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.id = $id")
 			->getQuery()
@@ -67,7 +67,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.parent = $id")
 			->getQuery()
@@ -82,7 +82,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.url = '$url'")
 			->getQuery()
@@ -97,7 +97,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.url = '$urlSubMenu'")
 			->getQuery()
@@ -112,7 +112,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where("node.id = '$root'")
 			->getQuery()
@@ -134,7 +134,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			//->where('node.level = 0')
 			->getQuery()
@@ -148,7 +148,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			//->where('node.level = 0')
 			->getQuery()
@@ -162,7 +162,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Agere\Menu\Model\Category', 'node')
+			->from('Stagem\ZfcMenu\Model\Category', 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			//->where('node.level')
 			->getQuery()

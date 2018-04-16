@@ -5,11 +5,11 @@
  * Date: 17.10.2016
  * Time: 15:58
  */
-namespace Agere\Menu\Controller\Plugin;
+namespace Stagem\ZfcMenu\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Agere\Menu\Model\Category;
-use Agere\Menu\Controller;
+use Stagem\ZfcMenu\Model\Category;
+use Stagem\ZfcMenu\Controller;
 use Agere\Core\Service\ServiceManagerAwareTrait;
 
 class MenuData extends AbstractPlugin
@@ -55,7 +55,7 @@ class MenuData extends AbstractPlugin
     {
         $sm = $this->getServiceManager();
         $om = $sm->get('Doctrine\ORM\EntityManager');
-        $repo = $om->getRepository('Agere\Menu\Model\Category');
+        $repo = $om->getRepository('Stagem\ZfcMenu\Model\Category');
         foreach ($item->getChildren() as $child) {
             if (count($child->getChildren())) {
                 $repo->removeFromTree($child);

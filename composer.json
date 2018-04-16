@@ -21,11 +21,17 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "php": ">=5.5"
+    "php": ">=5.5",
+    "gedmo/doctrine-extensions": "^2.4"
   },
   "autoload": {
     "psr-4": {
-      "Stagem\\Menu\\": "src/"
+      "Stagem\\ZfcMenu\\": "src/"
+    }
+  },
+  "extra": {
+    "zf": {
+      "config-provider": "Stagem\\ZfcMenu\\ConfigProvider"
     }
   }
 }

@@ -1,12 +1,12 @@
 <?php
-namespace Agere\Menu\Controller;
+namespace Stagem\ZfcMenu\Controller;
 
 use Zend\Stdlib\Exception;
 use Zend\View\Model\JsonModel;
 use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Component\Console\Tests\Command\HelpCommandTest;
 use Zend\Mvc\Controller\AbstractActionController;
-use Agere\Menu\Model\Category;
+use Stagem\ZfcMenu\Model\Category;
 use Zend\View\Helper\ViewModel;
 use Zend\Config\Reader\Json AS ConfigReaderJson;
 use Zend\Config\Config;
@@ -14,7 +14,7 @@ use Zend\Config\Writer\Json AS ConfigWriterJson;
 use Agere\Core\Service\ServiceManagerAwareTrait;
 
 /**
- * @method \Agere\Menu\Controller\Plugin\MenuData menuData()
+ * @method \Stagem\ZfcMenu\Controller\Plugin\MenuData menuData()
  */
 class IndexController extends AbstractActionController
 {
@@ -405,7 +405,7 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $sm = $this->getServiceLocator();
             $om = $sm->get('Doctrine\ORM\EntityManager');
-            $repo = $om->getRepository('Agere\Menu\Model\Category');
+            $repo = $om->getRepository('Stagem\ZfcMenu\Model\Category');
             $menuService = $sm->get('MenuService');
 
             $new = new Category();
@@ -430,7 +430,7 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $sm = $this->getServiceLocator();
             $om = $sm->get('Doctrine\ORM\EntityManager');
-            $repo = $om->getRepository('Agere\Menu\Model\Category');
+            $repo = $om->getRepository('Stagem\ZfcMenu\Model\Category');
             $menuService = $sm->get('MenuService');
 
             $menu = $menuService->getMenuById($request->getPost('id'));
@@ -450,7 +450,7 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
         $sm = $this->getServiceLocator();
         $om = $sm->get('Doctrine\ORM\EntityManager');
-        $repo = $om->getRepository('Agere\Menu\Model\Category');
+        $repo = $om->getRepository('Stagem\ZfcMenu\Model\Category');
         $menuService = $sm->get('MenuService');
 
         $menu = $menuService->getMenuById($request->getPost('id'));
@@ -476,7 +476,7 @@ class IndexController extends AbstractActionController
     {
         $sm = $this->getServiceLocator();
         $om = $sm->get('Doctrine\ORM\EntityManager');
-        $repo = $om->getRepository('Agere\Menu\Model\Category');
+        $repo = $om->getRepository('Stagem\ZfcMenu\Model\Category');
         /*$carrots = $repo->findOneByTitle('test');
         $repo->moveUp($carrots, true);
         die(__METHOD__);*/

@@ -1,26 +1,37 @@
 <?php
-namespace Agere\Menu\View\Helper;
+namespace Stagem\ZfcMenu\View\Helper;
 
+use Stagem\ZfcMenu\Service\MenuService;
 use Zend\View\Helper\AbstractHelper;
-use Agere\Core\Service\ServiceManagerAwareTrait;
-use    Agere\User\Acl\Acl;
+//use Popov\ZfcUser\Acl\Acl;
 
 class MenuHelper extends AbstractHelper
 {
-    use ServiceManagerAwareTrait;
+    /**
+     * @var MenuService
+     */
+    protected $menuService;
+    
+    public function __construct(MenuService $menuService)
+    {
+        $this->menuService = $menuService;
+    }
 
+    public function getMenuService()
+    {
+        return $this->menuService;
+    }
+    
     public function mainMenu()
     {
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
 
         return $menuService->getMainMenu();
     }
 
     public function menu()
     {
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
         $menu = $menuService->getMainMenu();
 
         echo ('<div class="sidebar">');
@@ -33,8 +44,7 @@ class MenuHelper extends AbstractHelper
     }
 
     public function menuIcon(){
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
         $menu = $menuService->getMainMenu();
 
         printf('<div class="sidebar">');
@@ -48,8 +58,7 @@ class MenuHelper extends AbstractHelper
 
     public function menuList($url)
     {
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
         $mainMenu = $menuService->getMenuByUrl($url);
 
         if ($mainMenu) {
@@ -94,8 +103,7 @@ class MenuHelper extends AbstractHelper
     }
 
     public function getNameSubMenu($url){
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
         $mainMenu = $menuService->getMenuByUrl($url);
 
         $nameSubMenu = '';
@@ -105,7 +113,7 @@ class MenuHelper extends AbstractHelper
             $urlSubMenu = '/' . $url;
             $menuList = $menuService->getRootByUrl($urlSubMenu);
             $root = $menuList[0]->getRoot();
-            $id = $root;                                           //значення root рівне значенню id головного меню (батьківського)
+            $id = $root;                                           //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ root пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ id пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
             $menuByRoot = $menuService->getMenuById($id);
             $nameSubMenu = $menuByRoot[0]->getTitle();
         }
@@ -113,8 +121,7 @@ class MenuHelper extends AbstractHelper
     }
 
     public function getShowSubMenu($url){
-        $sm = $this->getServiceManager();
-        $menuService = $sm->get('MenuService');
+        $menuService = $this->getMenuService();
         $mainMenu = $menuService->getMenuByUrl($url);
 
         if ($mainMenu) {
@@ -123,7 +130,7 @@ class MenuHelper extends AbstractHelper
             $urlSubMenu = '/' . $url;
             $menuList = $menuService->getRootByUrl($urlSubMenu);
             $root = $menuList[0]->getRoot();
-            $id = $root;                                           //значення root рівне значенню id головного меню (батьківського)
+            $id = $root;                                           //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ root пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ id пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
             $menuByRoot = $menuService->getMenuById($id);
             $idMainMenu = $menuByRoot[0];
         }

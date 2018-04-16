@@ -1,6 +1,6 @@
 <?php
 
-namespace Agere\Menu\Model\Repository;
+namespace Stagem\ZfcMenu\Model\Repository;
 
 use \Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;

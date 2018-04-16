@@ -7,9 +7,9 @@
  * @author Popov Sergiy <popov@agere.com.ua>
  * @datetime: 04.04.2016 0:19
  */
-namespace Agere\Menu\Controller\Factory;
+namespace Stagem\ZfcMenu\Controller\Factory;
 
-use Agere\Menu\Controller\IndexController;
+use Stagem\ZfcMenu\Controller\IndexController;
 
 class IndexControllerFactory
 {

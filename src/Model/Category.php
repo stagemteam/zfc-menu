@@ -1,6 +1,6 @@
 <?php
 
-namespace Agere\Menu\Model;
+namespace Stagem\ZfcMenu\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="Agere\Menu\Model\Repository\CategoryRepository")
- * @Gedmo\TranslationEntity(class="Agere\Menu\Model\CategoryTranslation")
+ * @ORM\Entity(repositoryClass="Stagem\ZfcMenu\Model\Repository\CategoryRepository")
+ * @Gedmo\TranslationEntity(class="Stagem\ZfcMenu\Model\CategoryTranslation")
  */
 class Category
 {
