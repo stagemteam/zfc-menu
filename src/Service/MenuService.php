@@ -9,7 +9,7 @@
  */
 namespace Stagem\ZfcMenu\Service;
 
-use Agere\Core\Service\DomainServiceAbstract;
+use Popov\ZfcCore\Service\DomainServiceAbstract;
 use Stagem\ZfcMenu\Model\Category;
 
 class MenuService extends DomainServiceAbstract

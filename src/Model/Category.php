@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="Stagem\ZfcMenu\Model\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @Gedmo\TranslationEntity(class="Stagem\ZfcMenu\Model\CategoryTranslation")
  */
 class Category
@@ -40,9 +40,8 @@ class Category
     private $url;
 
     /**
-     * @Gedmo\Translatable
-     * @Gedmo\Slug(fields={"created", "title"})
-     * @ORM\Column(length=64, unique=true)
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
      */
     private $slug;
 
