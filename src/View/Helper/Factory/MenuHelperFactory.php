@@ -17,6 +17,7 @@ namespace Stagem\ZfcMenu\View\Helper\Factory;
 
 use Psr\Container\ContainerInterface;
 use Stagem\ZfcMenu\View\Helper\MenuHelper;
+use Zend\ServiceManager\ServiceManager;
 
 class MenuHelperFactory
 {

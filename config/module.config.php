@@ -2,6 +2,8 @@
 
 namespace Stagem\ZfcMenu;
 
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'controllers' => [
         'aliases' => [
@@ -34,8 +36,8 @@ return [
         'aliases' => [
             'MenuService' => Service\MenuService::class,
         ],
-        'invokables' => [
-            Service\MenuService::class => Service\MenuService::class,
+        'factories' => [
+            Service\MenuService::class => InvokableFactory::class,
         ],
     ],
     'view_helpers' => [

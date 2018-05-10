@@ -4,10 +4,7 @@
         <div></div>
     </div>
     <ul class="sidebar-nav">
-        <?php
-        $menuHelper = $this->menu();
-        $menuHelper->menu();
-        ?>
+        <?= $this->menu()->render() ?>
     </ul>
 </div>
 <!-- SIDEBAR END -->

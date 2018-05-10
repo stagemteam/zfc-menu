@@ -22,7 +22,7 @@ class MenuService extends DomainServiceAbstract
 		$query = $om
 			->createQueryBuilder()
 			->select('node')
-			->from('Stagem\ZfcMenu\Model\Category', 'node')
+			->from(Category::class, 'node')
 			->orderBy('node.root, node.lft', 'ASC')
 			->where('node.level = 0')
 			->getQuery()

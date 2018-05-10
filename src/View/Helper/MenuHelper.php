@@ -3,7 +3,6 @@ namespace Stagem\ZfcMenu\View\Helper;
 
 use Stagem\ZfcMenu\Service\MenuService;
 use Zend\View\Helper\AbstractHelper;
-//use Popov\ZfcUser\Acl\Acl;
 
 class MenuHelper extends AbstractHelper
 {
@@ -29,31 +28,42 @@ class MenuHelper extends AbstractHelper
         return $menuService->getMainMenu();
     }
 
-    public function menu()
+    public function render()
     {
         $menuService = $this->getMenuService();
         $menu = $menuService->getMainMenu();
-
-        echo ('<div class="sidebar">');
+        $html = '<div class="sidebar">';
         foreach ($menu as $item) {
-                $str = strpos($item->getUrl(), "/");
-                $controller = substr($item->getUrl(), 0, $str);
-                 printf('<div class="main-nav '. $controller .'"><span></span><a href="/%s">%s</a></div>', $item->getUrl(), $item->getTitle());
+            $str = strpos($item->getUrl(), '/');
+            $controller = substr($item->getUrl(), 0, $str);
+            $html .= sprintf(
+                '<div class="main-nav ' . $controller . '"><span></span><a href="/%s">%s</a></div>',
+                $item->getUrl(),
+                $item->getTitle()
+            );
         }
-        printf('</div>');
+        $html .= '</div>';
+
+        return $html;
     }
 
     public function menuIcon(){
         $menuService = $this->getMenuService();
         $menu = $menuService->getMainMenu();
 
-        printf('<div class="sidebar">');
+        $html = '<div class="sidebar">';
         foreach ($menu as $item) {
             $str = strpos($item->getUrl(), "/");
             $controller = substr($item->getUrl(), 0, $str);
-            printf('<ul> <li class="' . $controller .'-ic"><a href="/%s">%s</a></ul>', $item->getUrl(), $item->getTitle());
+            $html .= sprintf(
+                '<ul> <li class="' . $controller .'-ic"><a href="/%s">%s</a></ul>',
+                $item->getUrl(),
+                $item->getTitle()
+            );
         }
-        printf('</div>');
+        $html .= '</div>';
+
+        return $html;
     }
 
     public function menuList($url)
