@@ -31,6 +31,7 @@
   },
   "extra": {
     "zf": {
+	  "component": "Stagem\\ZfcMenu",
       "config-provider": "Stagem\\ZfcMenu\\ConfigProvider"
     }
   }
