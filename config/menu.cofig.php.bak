@@ -1,0 +1,279 @@
+<?php
+
+namespace Stagem\ZfcMenu;
+
+return [
+    /*it's key of menu section*/
+    /*required*/
+    'materials_log2' => [
+        /*this option allows lower down menu level*/
+        //'is_anchor' => true,
+        /*required*/
+        'label' => 'Materials Log',
+        /*required*/
+        'translator' => 'label',
+        /*required*/
+        'sort_order' => '10',
+        /*this option allows to hide this section*/
+        'is_visible' => true,
+
+        /*if you want to use image for this menu section you should write url*/
+        'icon' => [
+            'url' => '',
+        ],
+        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+        'sprite' => [
+            'url' => '',
+            'width' => '20px',
+            'height' => '40px'
+        ],
+        /* here you should write a route and params for action*/
+        /*'action' => [
+            'route' => '',
+            'params' => [
+            ]
+        ],*/
+        'children' => [
+            'materials' => [
+                /*this option allows lower down menu level*/
+                //'is_anchor' => true,
+                /*required*/
+                'label' => 'Materials',
+                /*required*/
+                'translator' => 'label',
+                /*required*/
+                'sort_order' => '10',
+                /*this option allows to hide this section*/
+                'is_visible' => true,
+
+                /*if you want to use image for this menu section you should write url*/
+                'icon' => [
+                    'url' => '',
+                ],
+                /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                'sprite' => [
+                    'url' => '',
+                    'width' => '20px',
+                    'height' => '40px'
+                ],
+                /* here you should write a route and params for action*/
+                'action' => [
+                    'route' => '',
+                    'params' => [
+
+                    ]
+                ],
+            ],
+            'materials_type' => [
+                /*this option allows lower down menu level*/
+               // 'is_anchor' => true,
+                /*required*/
+                'label' => 'Materials Type',
+                /*required*/
+                'translator' => 'label',
+                /*required*/
+                'sort_order' => '1',
+                /*this option allows to hide this section*/
+                'is_visible' => true,
+
+                /*if you want to use image for this menu section you should write url*/
+                'icon' => [
+                    'url' => '',
+                ],
+                /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                'sprite' => [
+                    'url' => '',
+                    'width' => '20px',
+                    'height' => '40px'
+                ],
+                /* here you should write a route and params for action*/
+                'action' => [
+                    'route' => '',
+                    'params' => [
+
+                    ]
+                ],
+            ],
+            'material_category' => [
+                /*this option allows lower down menu level*/
+                //'is_anchor' => true,
+                /*required*/
+                'label' => 'Materials Category',
+                /*required*/
+                'translator' => 'label',
+                /*required*/
+                'sort_order' => '0',
+                /*this option allows to hide this section*/
+                'is_visible' => true,
+
+                /*if you want to use image for this menu section you should write url*/
+                'icon' => [
+                    'url' => '',
+                ],
+                'children' => [
+                    'materials_child' => [
+                        /*this option allows lower down menu level*/
+                        //'is_anchor' => true,
+                        /*required*/
+                        'label' => 'Materials',
+                        /*required*/
+                        'translator' => 'label',
+                        /*required*/
+                        'sort_order' => '10',
+                        /*this option allows to hide this section*/
+                        'is_visible' => true,
+
+                        /*if you want to use image for this menu section you should write url*/
+                        'icon' => [
+                            'url' => '',
+                        ],
+                        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                        'sprite' => [
+                            'url' => '',
+                            'width' => '20px',
+                            'height' => '40px'
+                        ],
+                        /* here you should write a route and params for action*/
+                        'action' => [
+                            'route' => '',
+                            'params' => [
+
+                            ]
+                        ],
+                    ],
+                    'materials_type_child' => [
+                        /*this option allows lower down menu level*/
+                        // 'is_anchor' => true,
+                        /*required*/
+                        'label' => 'Materials Type',
+                        /*required*/
+                        'translator' => 'label',
+                        /*required*/
+                        'sort_order' => '1',
+                        /*this option allows to hide this section*/
+                        'is_visible' => true,
+
+                        /*if you want to use image for this menu section you should write url*/
+                        'icon' => [
+                            'url' => '',
+                        ],
+                        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                        'sprite' => [
+                            'url' => '',
+                            'width' => '20px',
+                            'height' => '40px'
+                        ],
+                        /* here you should write a route and params for action*/
+                        'action' => [
+                            'route' => '',
+                            'params' => [
+
+                            ]
+                        ],
+                    ],
+                    'material_category_child' => [
+                        /*this option allows lower down menu level*/
+                        //'is_anchor' => true,
+                        /*required*/
+                        'label' => 'Materials Category',
+                        /*required*/
+                        'translator' => 'label',
+                        /*required*/
+                        'sort_order' => '0',
+                        /*this option allows to hide this section*/
+                        'is_visible' => true,
+
+                        /*if you want to use image for this menu section you should write url*/
+                        'icon' => [
+                            'url' => '',
+                        ],
+                        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                        'sprite' => [
+                            'url' => '',
+                            'width' => '20px',
+                            'height' => '40px'
+                        ],
+                        /* here you should write a route and params for action*/
+                        'action' => [
+                            'route' => '',
+                            'params' => [
+                            ]
+                        ],
+                    ]
+                ],
+                /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+                'sprite' => [
+                    'url' => '',
+                    'width' => '20px',
+                    'height' => '40px'
+                ],
+                /* here you should write a route and params for action*/
+                'action' => [
+                    'route' => '',
+                    'params' => [
+                    ]
+                ],
+            ]
+        ]
+    ],
+
+    'materials_log3' => [
+        /*this option allows lower down menu level*/
+        //'is_anchor' => true,
+        /*required*/
+        'label' => 'Materials Log',
+        /*required*/
+        'translator' => 'label',
+        /*required*/
+        'sort_order' => '12',
+        /*this option allows to hide this section*/
+        'is_visible' => true,
+
+        /*if you want to use image for this menu section you should write url*/
+        'icon' => [
+            'url' => '',
+        ],
+        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+        'sprite' => [
+            'url' => '',
+            'width' => '20px',
+            'height' => '40px'
+        ],
+        /* here you should write a route and params for action*/
+        /*'action' => [
+            'route' => '',
+            'params' => [
+            ]
+        ],*/
+    ],
+
+    'materials_log1' => [
+        /*this option allows lower down menu level*/
+        //'is_anchor' => true,
+        /*required*/
+        'label' => 'Materials Log',
+        /*required*/
+        'translator' => 'label',
+        /*required*/
+        'sort_order' => '5',
+        /*this option allows to hide this section*/
+        'is_visible' => true,
+
+        /*if you want to use image for this menu section you should write url*/
+        'icon' => [
+            'url' => '',
+        ],
+        /*if you want to use sprite for this menu section you should write url to image, also write width and height for sprite definition*/
+        'sprite' => [
+            'url' => '',
+            'width' => '20px',
+            'height' => '40px'
+        ],
+        /* here you should write a route and params for action*/
+        /*'action' => [
+            'route' => '',
+            'params' => [
+            ]
+        ],*/
+    ],
+];

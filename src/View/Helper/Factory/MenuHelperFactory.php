@@ -15,6 +15,7 @@
 
 namespace Stagem\ZfcMenu\View\Helper\Factory;
 
+use Popov\ZfcCore\Helper\UrlHelper;
 use Psr\Container\ContainerInterface;
 use Stagem\ZfcMenu\View\Helper\MenuHelper;
 use Zend\ServiceManager\ServiceManager;
@@ -23,8 +24,11 @@ class MenuHelperFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $menuService = $container->get('MenuService');
-        $menuHelper = new MenuHelper($menuService);
+        //$menuService = $container->get('MenuService');
+        $config = $container->get('config');
+        $urlHelper = $container->get(UrlHelper::class);
+
+        $menuHelper = new MenuHelper($config, $urlHelper);
 
         return $menuHelper;
     }

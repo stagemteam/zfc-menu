@@ -1,9 +1,7 @@
 <?php
 namespace Stagem\ZfcMenu\View\Helper;
 
-use Popov\ZfcCore\Helper\UrlHelper;
 use Stagem\ZfcMenu\Service\MenuService;
-use Zend\Stdlib\ArrayObject;
 use Zend\View\Helper\AbstractHelper;
 
 class MenuHelper extends AbstractHelper
@@ -11,90 +9,42 @@ class MenuHelper extends AbstractHelper
     /**
      * @var MenuService
      */
-    protected $config;
-
-    /**
-     * @var UrlHelper
-     */
-    protected $urlHelper;
-
-    public function __construct(array $config = [], UrlHelper $urlHelper)
+    protected $menuService;
+    
+    public function __construct(MenuService $menuService)
     {
-        $this->config = $config;
-        $this->urlHelper = $urlHelper;
+        $this->menuService = $menuService;
     }
 
-    public function getConfig()
+    public function getMenuService()
     {
-        return $this->config;
+        return $this->menuService;
+    }
+    
+    public function mainMenu()
+    {
+        $menuService = $this->getMenuService();
+
+        return $menuService->getMainMenu();
     }
 
     public function render()
     {
-        $menu = $this->getMenu();
+        $menuService = $this->getMenuService();
+        $menu = $menuService->getMainMenu();
         $html = '<div class="sidebar">';
-        $html .= '<ul>';
-        foreach ($menu as $key => $value) {
-            $html .= sprintf('<li><span class="%s"></span><a href=%s>%s</a></li>',
-                $value['icon-class'],
-                $this->urlHelper->generate($value['action']['route'], $value['action']['params']),
-                $value['label']);
+        foreach ($menu as $item) {
+            $str = strpos($item->getUrl(), '/');
+            $controller = substr($item->getUrl(), 0, $str);
+            $html .= sprintf(
+                '<div class="main-nav ' . $controller . '"><span></span><a href="/%s">%s</a></div>',
+                $item->getUrl(),
+                $item->getTitle()
+            );
         }
-        $html .= '</ul></div>';
+        $html .= '</div>';
 
         return $html;
-
-    }
-
-    public function getMenu() {
-        $menu = $this->config['menu'];
-        $sortedArray = $this->sort($menu, 'sort_order');
-        return $this->prepareSection($sortedArray);
-    }
-
-    /**
-     * @param $sortedArray
-     * @return mixed
-     * @todo-vlad Реалізувати рекурсивний підхід
-     */
-    public function prepareSection($sortedArray) {
-        foreach ($sortedArray as $key => $value) {
-            if ($value['is_visible'] == true) {
-                if (isset($value['children'])) {
-                    $childArraySort = $this->sort($value['children'], 'sort_order');
-                    foreach ($childArraySort as $k => $v) {
-                        if ($value['is_visible'] == true) {
-                            if (isset($v['children'])) {
-                                $childSort = $this->sort($v['children'], 'sort_order');
-                                $childArraySort[$k]['children'] = $childSort;
-                            }
-                        }
-                    }
-                    $sortedArray[$key]['children'] = $childArraySort;
-                }
-            }
-        }
-
-        return $sortedArray;
-    }
-
-    /**
-     * @param $menu
-     * @param $sortByOption
-     * @return array
-     */
-    public function sort($menu, $sortByOption)
-    {
-        $sorted = [];
-        foreach ($menu as $key => $value) {
-            $sorted[$key] = $value[$sortByOption];
-        }
-        array_multisort($sorted, SORT_ASC, $menu);
-        $sortedArray = [];
-        foreach ($sorted as $item => $val) {
-            $sortedArray[$item] = $menu[$item];
-        }
-        return $sortedArray;
     }
 
     public function menuIcon(){
