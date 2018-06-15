@@ -12,12 +12,13 @@ return [
         'menu' => __NAMESPACE__ . '\Action',
     ],
 
+    // Doctrine config
     'doctrine' => [
         'driver' => [
             __NAMESPACE__ . '_driver' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/' . __NAMESPACE__ . '/Model'],
+                'paths' => [__DIR__ . '/../src//Model'],
             ],
             'orm_default' => [
                 'drivers' => [
